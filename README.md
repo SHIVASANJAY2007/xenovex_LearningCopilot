@@ -1,44 +1,66 @@
 # ⚡ XENOVEX: Personalized Learning Copilot
+> **Stage:** v0.1-Alpha (Initial Release)
+> **Engine:** n8n Agentic Workflow
 
-<p align="center">
+XENOVEX is a lightweight AI-driven study tool designed to solve student organization and study efficiency problems. Built entirely within **n8n**, it moves beyond a simple chatbot by implementing a structured agentic workflow to handle academic materials.
+
+<p align="left">
   <img src="https://img.shields.io/badge/n8n-Workflow-FF6C37?style=for-the-badge&logo=n8n&logoColor=white" />
-  <img src="https://img.shields.io/badge/AI-Agentic-blueviolet?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/RAG-Enabled-success?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Initial_Prototype-yellow?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/AI-Agentic_RAG-blueviolet?style=for-the-badge" />
 </p>
 
+---
 
+## 🏗️ Project Architecture (Initial Stage)
 
-**XENOVEX** is an intelligent, agentic study assistant designed to bridge the gap between "dense course material" and "effective learning." Unlike generic AI, XENOVEX uses **Retrieval-Augmented Generation (RAG)** to ensure every answer is grounded in your specific textbooks and syllabus.
+Currently, XENOVEX operates as a **Working AI Agent** within n8n. Instead of a "black-box" prompt, the logic is broken down into modular steps:
+
+* **The Orchestrator:** n8n manages the flow, deciding when to retrieve data and when to respond.
+* **The Brain:** LLM (OpenAI/Claude) connected via the AI Agent node.
+* **Knowledge Base:** RAG-ready structure for Syllabus and Notes ingestion.
+* **Context Management:** Chat history and lightweight memory storage.
 
 ---
 
-## 💎 Features & Capabilities
+## 🚀 Current Roadmap
 
-| Feature | Description |
-| :--- | :--- |
-| **🎯 Goal-Oriented RAG** | Answers questions using *only* your uploaded PDFs with full citations. |
-| **🗓️ Dynamic Planner** | Converts syllabi into realistic weekly study schedules based on your free time. |
-| **🧠 Adaptive Memory** | Tracks topic-wise proficiency (Low/Med/High) to prioritize weak areas. |
-| **🔧 Tool Orchestration** | Powered by n8n workflows for transparent, logic-based decision making. |
-| **🔒 Privacy First** | Minimal data footprint; supports local LLM integration for maximum security. |
-
----
-
-## 🛠️ Tech Stack
-
-* **Orchestration:** [n8n](https://n8n.io/) (Agentic Workflows)
-* **LLM Support:** OpenAI GPT-4 / Anthropic Claude / Ollama (Local)
-* **Vector Engine:** Pinecone / Supabase Vector (for course retrieval)
-* **Storage:** Postgres / n8n Binary Store (for memory & session state)
-* **Interface:** n8n Chat Trigger / Webhook-based UI
+| Phase | Description | Status |
+| :--- | :--- | :---: |
+| **Phase 1** | Core n8n AI Agent Setup (ChatGPT-like logic) | ✅ Done |
+| **Phase 2** | Vector Store Integration (Course RAG) | 🏗️ In Progress |
+| **Phase 3** | Automated Study Planner Node | 📅 Planned |
+| **Phase 4** | Dashboard / Simple Web UI | 📅 Planned |
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Setup Instructions
 
-### 1. Installation
-Clone this repository to access the workflow JSON files:
-```bash
-git clone [https://github.com/yourusername/xenovex.git](https://github.com/yourusername/xenovex.git)
-cd xenovex
+To get this "Initial Stage" agent running in your own n8n instance:
+
+### 1. Requirements
+* An **n8n** instance (Desktop or Docker)
+* An **OpenAI API Key** (for the Agent node)
+* (Optional) **Ollama** for local inference
+
+### 2. Import Workflow
+1. Download the `xenovex_v1_agent.json` from the `workflows/` folder.
+2. In n8n, click **Workflows** > **Import from File**.
+3. Connect your **AI Agent** node to your OpenAI/Local LLM credentials.
+
+### 3. Test the Agent
+* Use the **Chat Window** within n8n to interact.
+* The current agent is configured to recognize academic queries and maintain conversation memory.
+
+---
+
+## 🧬 How it Works (The Workflow)
+
+```mermaid
+graph TD
+    A[User Query] --> B{n8n Orchestrator}
+    B --> C[AI Agent Node]
+    C --> D[Chat Memory]
+    C --> E[Vector Store/Tools]
+    E --> F[Contextual Response]
+    F --> G[Final User Answer]
