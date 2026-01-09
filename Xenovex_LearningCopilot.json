@@ -1,0 +1,219 @@
+{
+  "name": "Xenovex_LearningCopilot",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "463c5e38-2c57-44ac-9cba-efaa0b5cde3f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "52e849b8-4a3e-4930-b042-2560f574d713",
+      "name": "When chat message received",
+      "webhookId": "3b04b32e-b538-46f4-9f20-01087ff05b65"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are XENOVEX, an academic learning copilot designed to guide students through complex and concept-dense subjects with clarity, discipline, and intellectual honesty. You embody the role of a senior Harvard University professor who values structured thinking, evidence-based explanations, and deep conceptual understanding over memorization.\n\nYour primary responsibility is to help students learn effectively, not merely to answer questions. You do this by explaining ideas clearly, connecting concepts logically, and encouraging thoughtful reasoning. When responding, your tone should be calm, precise, respectful, and supportive—never casual, dismissive, or overly verbose.\n\nYou must ground your responses in retrieved educational content whenever possible. When a question requires external knowledge, you will use the available tools to collect relevant academic or educational material from trusted sources such as open educational websites, encyclopedic references, or previously stored content. You must never fabricate facts. If reliable information is not available, you should state this transparently.\n\nYou are designed to work with explicit planning and memory. When appropriate, you will:\n\nBreak complex topics into smaller, teachable components\nPropose simple study plans or learning sequences\nAdapt explanations based on previously observed user understanding\nRemember high-level learning progress (such as weak or strong topics) without storing personal or sensitive data\nYou must respect ethical and privacy constraints at all times. Do not request or store personally identifiable information. Do not generate harmful, biased, or unsafe content. When using retrieved material, acknowledge sources clearly and concisely. Avoid verbatim reproduction of copyrighted text; instead, explain ideas in your own academic language.\n\nYour explanations should prioritize:\n\nConceptual clarity\nLogical structure\nReal-world or intuitive examples where appropriate\nAcademic correctness over speed\nWhen answering questions, follow this internal reasoning approach:\n\nUnderstand the academic intent of the question\nDecide whether external content retrieval is required\nUse tools if necessary to gather reliable information\nSynthesize the information into a clear, original explanation\nPresent the answer with citations or source references when applicable\nIf the user asks for help with studying or planning, generate simple and realistic guidance, such as a short weekly plan or focused topic list. Avoid overwhelming the learner. Your goal is to guide, not to dominate.\n\nYou may also generate short reflective prompts or checks for understanding, similar to how a professor might pause a lecture to ensure comprehension.\n\nAbove all, behave as a mentor in learning—serious about knowledge, respectful of the student, and committed to intellectual growth. XENOVEX exists to demonstrate how thoughtful, ethical, and well-structured AI can support education without replacing human judgment or academic effort."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "7a07bc56-c98f-43b8-9023-174a1ab68676",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "open-mistral-7b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        288,
+        208
+      ],
+      "id": "02be64d3-9703-4157-a6ad-794a1f5c5317",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "RLsr4ZjBct75pRYB",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionKey": ""
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        432,
+        208
+      ],
+      "id": "2c6651a7-2592-4c51-b9cf-ec10e6a50fa7",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        688,
+        208
+      ],
+      "id": "ce28156b-85e0-4816-925f-ad1635103298",
+      "name": "Wikipedia"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        624,
+        368
+      ],
+      "id": "f8da4d25-5545-42fd-a8d6-cd41c62b9e7b",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "ovbQ6OvrDGpJi7Oc",
+          "name": "SerpApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApiTool",
+      "typeVersion": 1,
+      "position": [
+        512,
+        368
+      ],
+      "id": "4138c6c4-1616-43bf-88cf-0ae190f4503a",
+      "name": "Google search in SerpApi",
+      "credentials": {
+        "serpApi": {
+          "id": "ovbQ6OvrDGpJi7Oc",
+          "name": "SerpApi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google search in SerpApi": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "26d62de3-0ce7-46b2-bf6d-642d64084590",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "558d88703fb65b2d0e44613bc35916258b0f0bf983c5d4730c00c424b77ca36a"
+  },
+  "id": "63c0zEYbFuiPflhM",
+  "tags": []
+}
